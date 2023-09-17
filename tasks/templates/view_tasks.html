@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список задач</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+{% block content %}
+<h1>Список ваших задач</h1>
+<form><ul>
+{% for task in tasks %}
+    <li>
+        <strong>Номер задачи</strong> {{ task.id }}<br>
+        <strong>Тип задачи:</strong> {{ task.get_task_type_display }}<br>
+        <strong>Описание:</strong> {{ task.description }}<br>
+        <strong>Важность:</strong> {{ task.get_importance_display }}<br>
+        <strong>Регион:</strong> {{ task.get_region_display }}<br>
+    </li>
+{% empty %}
+    <p>У вас пока нет созданных задач.</p>
+{% endfor %}
+</ul>
+{% endblock %}
+  </form>
+</body>
+</html>

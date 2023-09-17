@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Проверка почты</title>
+</head>
+<body>
+    <h1>Проверка почты</h1>
+    {% if new_tasks %}
+        <h2>Новые задачи:</h2>
+        <ul>
+            {% for task in new_tasks %}
+                <li>{{ task.id }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Новых писем нет.</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'check_email' %}">
+        {% csrf_token %}
+        <button type="submit">Проверить почту</button>
+    </form>
+    <div style="text-align: center;">
+            <a href="{% url 'create_task' %}">Создание задач</a>
+    </div>
+</body>
+</html>

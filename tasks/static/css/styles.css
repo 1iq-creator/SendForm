@@ -1,0 +1,27 @@
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #ddd;
+}
+
+h1 {
+  text-align: center;
+}
+sup {
+    color: red;
+
+}
+select[name="task_type"] {
+    width: 100%;
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea {
+    width: 100%;
+}

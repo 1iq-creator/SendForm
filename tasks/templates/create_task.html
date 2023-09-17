@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Создание задачи</title>
+</head>
+<body>
+    <h1>Создание задачи</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div align="right">
+            <button type="submit" style="padding: 10px 20px;">Сохранить</button>
+            <button type="reset" style="padding: 10px 20px;">Отмена</button>
+        </div>
+    </form>
+    <div style="text-align: center;">
+    {% if user.is_authenticated %}
+        <a href="{% url 'view_tasks' %}">Просмотр задач</a>
+    {% endif %}
+    </div>
+    {% if user.username == 'moderator' %}
+        <div style="text-align: center;">
+            <a href="{% url 'moderator_view' %}">Модерация задач</a>
+        </div>
+    {% endif %}
+<div style="text-align: center;">
+<a href="{% url 'task_history' %}">Просмотреть историю действий</a>
+    </div>
+<div style="text-align: center;">
+    <a href="{% url 'check_email' %}">Проверить почту на новые задачи</a>
+    </div>
+<div style="text-align: center;">
+<a href="{% url 'login' %}">Выход из системы</a>
+    </div>
+</body>
+</html>

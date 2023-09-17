@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Модерация задач</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+{% block content %}
+<h1>Модерация задач</h1>
+
+<ul style="max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;">
+    {% for task in tasks %}
+    <li>
+        <strong>Номер задачи</strong> {{ task.id }}<br>
+        <strong>Тип задачи:</strong> {{ task.get_task_type_display }}<br>
+        <strong>Описание:</strong> {{ task.description }}<br>
+        <strong>Файл:</strong> {{ task.file }}<br>
+        <strong>Важность:</strong> {{ task.get_importance_display }}<br>
+        <strong>Регион:</strong> {{ task.get_region_display }}<br>
+        </li>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="task_id" value="{{ task.id }}">
+            <label for="new_status">Изменить статус:</label>
+            <select id="new_status" name="status">
+                <option value="в ожидании" {% if task.status == 'в ожидании' %}selected{% endif %}>В ожидании</option>
+                <option value="в процессе" {% if task.status == 'в процессе' %}selected{% endif %}>В процессе</option>
+                <option value="завершено" {% if task.status == 'завершено' %}selected{% endif %}>Завершено</option>
+            </select><br>
+            <label for="comments">Добавить комментарий:</label>
+            <textarea id="comments" name="comments" rows="4" cols="50">{{ task.comments }}</textarea><br>
+            <button type="submit">Сохранить</button>
+        </form>
+
+    {% empty %}
+    <p>Нет задач для модерации.</p>
+    {% endfor %}
+</ul>
+    <div style="text-align: center;">
+            <a href="{% url 'create_task' %}">Создание задач</a>
+    </div>
+{% endblock %}
+
+</body>
+</html>

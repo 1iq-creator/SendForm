@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>История действий</title>
+</head>
+<body>
+
+{% block content %}
+  <h2>История изменений задач</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Номер задачи</th>
+        <th>Дата и время изменения</th>
+        <th>Предыдущий статус</th>
+        <th>Новый статус</th>
+        <th>Предыдущий комментарий</th>
+        <th>Новый комментарий</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in history_entries %}
+        <tr>
+          <td>{{ entry.task_id }}</td>
+          <td>{{ entry.timestamp }}</td>
+          <td>{{ entry.prev_status }}</td>
+          <td>{{ entry.status_change }}</td>
+          <td>{{ entry.prev_comment }}</td>
+          <td>{{ entry.comment_change }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% if user.username == 'admin' %}
+  <form method="post" action="{% url 'task_history' %}">
+    {% csrf_token %}
+    <label for="task_to_delete">Выберите задачу для удаления:</label>
+    <select id="task_to_delete" name="task_to_delete">
+      {% for task in tasks %}
+        <option value="{{ task.id }}">{{ task.id }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Удалить</button>
+  </form>
+{% endif %}
+  <div style="text-align: center;">
+              <a href="{% url 'create_task' %}">Создание задач</a>
+      </div>
+{% endblock %}
+</body>
+</html>

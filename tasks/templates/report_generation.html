@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчетность</title>
+</head>
+<body>
+    <h1>Выберите параметр отчета:</h1>
+    <form method="post" action="{% url 'generate_report' %}">
+        {% csrf_token %}
+        <select name="report_type">
+            <option value="completed_tasks">Отправка отчетности по выполненным задачам</option>
+            <option value="pending_tasks">Отправка отчетности по не завершенным задачам</option>
+            <option value="task_completion_percentage">Доска отчетности: % выполнения задач</option>
+            <option value="user_task_completion_percentage">Доска отчетности: Кол-во задач каждого пользователя</option>
+        </select>
+        <br>
+        <button type="submit">Сформировать и отправить отчет</button>
+    </form>
+</body>
+</html>
